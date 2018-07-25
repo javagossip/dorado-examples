@@ -53,9 +53,16 @@ public class ExamplesController {
 
 	@GET
 	@Path("/primitive/default")
-	// 测试基础类型参数返回值,
-	public String retIntTest(int a, double b, float c) {
+	// 测试基础类型参数返回值, 如果请求：/primitive/default，a,b,c3个值分别有默认值,
+	// 如果请求/primitive/default?a=100则a会输出100
+	public String primitiveDefault(int a, double b, float c) {
 		return "int: " + a + "double: " + b + "float: " + c;
+	}
+
+	@GET
+	@Path("/primitive/default/{a}")
+	public String getValueFromPathVariable(int a) {
+		return String.valueOf(a);
 	}
 	
 	@POST
