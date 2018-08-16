@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mobi.f2time.dorado.examples.dao.AmpPlanMapper" >
+  <resultMap id="BaseResultMap" type="mobi.f2time.dorado.examples.model.AmpPlan" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="plan_name" property="planName" jdbcType="VARCHAR" />
+    <result column="plan_limit" property="planLimit" jdbcType="INTEGER" />
+    <result column="limit_state" property="limitState" jdbcType="INTEGER" />
+    <result column="run_state" property="runState" jdbcType="INTEGER" />
+    <result column="plan_state" property="planState" jdbcType="INTEGER" />
+    <result column="create_user" property="createUser" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="op_user" property="opUser" jdbcType="INTEGER" />
+    <result column="op_user_type" property="opUserType" jdbcType="INTEGER" />
+    <result column="delivery_mode" property="deliveryMode" jdbcType="INTEGER" />
+    <result column="platform" property="platform" jdbcType="INTEGER" />
+      <result column="imp_monitor_url" property="impMonitorUrl" jdbcType="VARCHAR" />
+      <result column="clk_monitor_url" property="clkMonitorUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, plan_name, plan_limit, run_state, plan_state, create_user, create_time, update_time, 
+    op_user,op_user_type,limit_state, delivery_mode, platform, imp_monitor_url, clk_monitor_url
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.f2time.amp.model.AmpPlanExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amp_plan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+      <if test="start != null and limit != null">
+          limit ${start},${limit}
+      </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from amp_plan
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from amp_plan
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.f2time.amp.model.AmpPlanExample" >
+    delete from amp_plan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.f2time.amp.model.AmpPlan" useGeneratedKeys="true" keyProperty="id" >
+    insert into amp_plan (id, plan_name, plan_limit, 
+      run_state, plan_state, create_user, 
+      create_time, update_time, op_user,
+      op_user_type,limit_state,delivery_mode,
+      platform, imp_monitor_url, clk_monitor_url)
+    values (#{id,jdbcType=INTEGER}, #{planName,jdbcType=VARCHAR}, #{planLimit,jdbcType=INTEGER}, 
+      #{runState,jdbcType=INTEGER}, #{planState,jdbcType=INTEGER}, #{createUser,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{opUser,jdbcType=INTEGER},
+      #{opUserType,jdbcType=INTEGER}, #{limitState,jdbcType=INTEGER}, #{deliveryMode,jdbcType=INTEGER},
+      #{platform,jdbcType=INTEGER}, #{impMonitorUrl,jdbcType=VARCHAR}, #{clkMonitorUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.f2time.amp.model.AmpPlan" useGeneratedKeys="true" keyProperty="id" >
+    insert into amp_plan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="planName != null" >
+        plan_name,
+      </if>
+      <if test="planLimit != null" >
+        plan_limit,
+      </if>
+      <if test="limitState != null" >
+        limit_state,
+      </if>
+      <if test="runState != null" >
+        run_state,
+      </if>
+      <if test="planState != null" >
+        plan_state,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="opUser != null" >
+        op_user,
+      </if>
+      <if test="opUserType != null" >
+        op_user_type,
+      </if>
+      <if test="deliveryMode != null" >
+          delivery_mode,
+      </if>
+      <if test="platform != null" >
+          platform,
+      </if>
+        <if test="impMonitorUrl != null" >
+            imp_monitor_url,
+        </if>
+        <if test="clkMonitorUrl != null" >
+            clk_monitor_url,
+        </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="planName != null" >
+        #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="planLimit != null" >
+        #{planLimit,jdbcType=INTEGER},
+      </if>
+      <if test="limitState != null" >
+        #{limitState,jdbcType=INTEGER},
+      </if>
+      <if test="runState != null" >
+        #{runState,jdbcType=INTEGER},
+      </if>
+      <if test="planState != null" >
+        #{planState,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opUser != null" >
+        #{opUser,jdbcType=INTEGER},
+      </if>
+      <if test="opUserType != null" >
+        #{opUserType,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryMode != null" >
+        #{deliveryMode,jdbcType=INTEGER},
+      </if>
+      <if test="platform != null" >
+        #{platform,jdbcType=INTEGER},
+      </if>
+        <if test="impMonitorUrl != null" >
+            #{impMonitorUrl,jdbcType=VARCHAR},
+        </if>
+        <if test="clkMonitorUrl != null" >
+            #{clkMonitorUrl,jdbcType=VARCHAR},
+        </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.f2time.amp.model.AmpPlanExample" resultType="java.lang.Integer" >
+    select count(*) from amp_plan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amp_plan
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.planName != null" >
+        plan_name = #{record.planName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planLimit != null" >
+        plan_limit = #{record.planLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.runState != null" >
+        run_state = #{record.runState,jdbcType=INTEGER},
+      </if>
+      <if test="record.limitState != null" >
+        limit_state = #{record.limitState,jdbcType=INTEGER},
+      </if>
+      <if test="record.planState != null" >
+        plan_state = #{record.planState,jdbcType=INTEGER},
+      </if>
+      <if test="record.createUser != null" >
+        create_user = #{record.createUser,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.opUser != null" >
+        op_user = #{record.opUser,jdbcType=INTEGER},
+      </if>
+      <if test="record.opUserType != null" >
+        op_user_type = #{record.opUserType,jdbcType=INTEGER},
+      </if>
+      <if test="record.deliveryMode != null" >
+          delivery_mode = #{record.deliveryMode,jdbcType=INTEGER},
+      </if>
+      <if test="record.platform != null" >
+          platform = #{record.platform,jdbcType=INTEGER},
+      </if>
+        <if test="record.impMonitorUrl != null" >
+            imp_monitor_url = #{record.impMonitorUrl,jdbcType=VARCHAR},
+        </if>
+        <if test="record.clkMonitorUrl != null" >
+            clk_monitor_url = #{record.clkMonitorUrl,jdbcType=VARCHAR},
+        </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amp_plan
+    set id = #{record.id,jdbcType=INTEGER},
+      plan_name = #{record.planName,jdbcType=VARCHAR},
+      plan_limit = #{record.planLimit,jdbcType=INTEGER},
+      limit_state = #{record.limitState,jdbcType=INTEGER},
+      run_state = #{record.runState,jdbcType=INTEGER},
+      plan_state = #{record.planState,jdbcType=INTEGER},
+      create_user = #{record.createUser,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      op_user = #{record.opUser,jdbcType=INTEGER},
+      op_user_type = #{record.opUserType,jdbcType=INTEGER},
+      platform = #{record.platform,jdbcType=INTEGER},
+      delivery_mode = #{record.deliveryMode,jdbcType=INTEGER},
+      imp_monitor_url = #{record.impMonitorUrl,jdbcType=VARCHAR},
+      clk_monitor_url = #{record.clkMonitorUrl,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.f2time.amp.model.AmpPlan" >
+    update amp_plan
+    <set >
+      <if test="planName != null" >
+        plan_name = #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="planLimit != null" >
+        plan_limit = #{planLimit,jdbcType=INTEGER},
+      </if>
+      <if test="limitState != null" >
+        limit_state = #{limitState,jdbcType=INTEGER},
+      </if>
+      <if test="runState != null" >
+        run_state = #{runState,jdbcType=INTEGER},
+      </if>
+      <if test="planState != null" >
+        plan_state = #{planState,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opUser != null" >
+        op_user = #{opUser,jdbcType=INTEGER},
+      </if>
+      <if test="opUserType != null" >
+        op_user_type = #{opUserType,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryMode != null" >
+          delivery_mode = #{deliveryMode,jdbcType=INTEGER},
+      </if>
+      <if test="platform != null" >
+          platform = #{platform,jdbcType=INTEGER},
+      </if>
+        <if test="impMonitorUrl != null" >
+            imp_monitor_url = #{impMonitorUrl,jdbcType=VARCHAR},
+        </if>
+        <if test="clkMonitorUrl != null" >
+            clk_monitor_url = #{clkMonitorUrl,jdbcType=VARCHAR},
+        </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.f2time.amp.model.AmpPlan" >
+    update amp_plan
+    set plan_name = #{planName,jdbcType=VARCHAR},
+      plan_limit = #{planLimit,jdbcType=INTEGER},
+      limit_state = #{limitState,jdbcType=INTEGER},
+      run_state = #{runState,jdbcType=INTEGER},
+      plan_state = #{planState,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      op_user = #{opUser,jdbcType=INTEGER},
+      op_user_type = #{opUserType,jdbcType=INTEGER},
+      platform = #{platform,jdbcType=INTEGER},
+      delivery_mode = #{deliveryMode,jdbcType=INTEGER},
+      imp_monitor_url = #{impMonitorUrl,jdbcType=VARCHAR},
+      clk_monitor_url = #{clkMonitorUrl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -15,17 +15,38 @@
  */
 package mobi.f2time.dorado.examples;
 
+import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.core.io.ClassPathResource;
+
+import mobi.f2time.dorado.rest.server.DoradoServer;
 import mobi.f2time.dorado.rest.server.DoradoServerBuilder;
 
 /**
  * 
  * @author wangwp
  */
+@Configuration
+@Import({MyBatisConfig.class})
 public class Application {
-
+	
+	@Bean
+    public PropertyPlaceholderConfigurer dataSourceConfig() {
+        PropertyPlaceholderConfigurer ppc = new PropertyPlaceholderConfigurer();
+        ppc.setLocations(new ClassPathResource("application.properties"));
+        return ppc;
+    }
+	
 	public static void main(String[] args) {
 		// 启动server,更多参数请参考DoradoServerBuilder
-		DoradoServerBuilder.forPort(19999).maxPendingRequest(1000)
-				.scanPackages("mobi.f2time.dorado.examples.controller").build().start();
+		DoradoServer server = DoradoServerBuilder.forPort(19999).maxPacketLength(1024*1024*10)
+				.springOn().build();
+		
+		//ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-context.xml");
+		//SpringContainer.create(ctx);
+
+		server.start();
 	}
 }

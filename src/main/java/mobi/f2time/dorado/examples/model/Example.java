@@ -22,6 +22,7 @@ package mobi.f2time.dorado.examples.model;
 public class Example {
 	private int id;
 	private String name;
+	private String address;
 	
 	public int getId() {
 		return id;
@@ -31,6 +32,14 @@ public class Example {
 		this.id = id;
 	}
 	
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	public String getName() {
 		return name;
 	}
